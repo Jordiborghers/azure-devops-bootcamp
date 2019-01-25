@@ -10,10 +10,21 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  displayName: Publish project
+  inputs:
+    command: publish
+    projects: 'DevOpsBrosShop.sln'
+    arguments: "--self-contained --framework netcoreapp2.1 --runtime win10-x64 --output $(Build.ArtifactStagingDirectory)"
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '**/*.Tests.csproj'
+
+- task: PublishBuildArtifacts@1
+  displayName: publish artifact
+  inputs:
+    ArtifactName: drop
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
