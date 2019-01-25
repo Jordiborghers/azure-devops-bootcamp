@@ -1,0 +1,56 @@
+﻿@model DevOpsBrosShop.Models.ViewModels.ProductsViewModel
+
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<style type="text/css">
+    .product-card {
+        border: 1px solid darkgrey;
+        margin: 15px 10px;
+    }
+
+    .card-title {
+        border-bottom: 1px solid darkgrey;
+        margin-bottom: 10px;
+    }
+
+    .card-content {
+        display: flex;
+        -ms-align-items: center;
+        -o-align-items: center;
+        -webkit-align-items: center;
+        align-items: center;
+        
+        margin-bottom: 10px;
+        height: 310px;
+    }
+
+    .card-content > img { width: 100%; }
+
+    .card-actions {
+        border-top: 1px solid darkgrey;
+        margin: 10px 0;
+        padding-top: 10px;
+    }
+</style>
+
+<div class="row">
+    @{
+        foreach (var product in Model.Products)
+        {
+            <div class="col-md-3 product-card">
+                <div class="card-title">
+                    <h3>@product.Name</h3>
+                    <div>$ <span>@product.Price</span></div>
+                </div>
+                <div class="card-content">
+                    <img src="@product.ImageUrl"/>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-default">Buy</button>
+                </div>
+            </div>
+        }
+    }
+</div>
